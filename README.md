@@ -1,2 +1,3 @@
 # data
- Contains example data for various reposotories
+ Contains example data for various reposotories.
+ 
