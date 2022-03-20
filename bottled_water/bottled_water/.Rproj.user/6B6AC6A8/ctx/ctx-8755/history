@@ -1,0 +1,507 @@
+library(flowdex)
+genfs()
+fs <- repairSID()
+fs
+str(fs)
+library(flowWorkspace)
+library(flowCore)
+aa <- list.files("fcsFiles")
+aa
+sifcs <- read.FCS(aa[1])
+aa <- list.files("fcsFiles", full.names = T)
+sifcs <- read.FCS(aa[1])
+str(sifcs)
+sifcs
+sifcs <- read.FCS(aa[1], column.pattern = "$A")
+sifcs
+sifcs
+sifcs <- read.FCS(aa[1], column.pattern = "$-A")
+sifcs <- read.FCS(aa[1])
+sifcs
+str(sifcs)
+checkRepairFcsFiles()
+expr <- sifcs@exprs
+str(expr)
+colnames(expr)
+ht(expr)
+aa <- list.files("fcsFiles", full.names = T)
+sifcs <- read.FCS(aa[1])
+expr <- sifcs@exprs
+colnames(expr)
+colnames(expr)
+ht(expr)
+plot(x=expr$FITC-A, y=expr$FSC-A)
+str(extr)
+str(expr)
+ht(expr)
+plot(x=expr[,"FITC-A"], y=expr[,"FSC-A"])
+gs <- makeAddGatingSet()
+plotgates(gs)
+plotgates(gs, ti="Original", fns="_original")
+plot(x=expr[,"FITC-A"], y=expr[,"FSC-A"], xlim=c(0, 2500))
+plot(x=expr[,"FITC-A"], y=expr[,"FSC-A"], xlim=c(0, 500))
+ht(expr)
+ht(expr)
+ind <- which(expr[,"FITC-A"] < 200)
+ind
+length(ind)
+nrow(expr)
+sifcs
+sifcs@description$`$BEGINDATA`
+sifcs@description$`$ENDDATA`
+dim(expr)
+902579*13
+#
+aa <- list.files("fcsFiles", full.names = T)
+sifcs <- read.FCS(aa[1])
+expr <- sifcs@exprs
+ind <- which(expr[,"FITC-A"] > 200)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+write.FCS(newfcs, "test.fcs")
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] > 200)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+} # end for i
+} # EOF
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] > 200)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+} # end for i
+} # EOF
+cleanOutNoise()
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+cat(paste0("Cleaning up ", length(finas), " fcs files (cutoff ="), cutoff, "):\n")
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] > 200)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("ok\n")
+} # EOF
+cleanOutNoise()
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+cat(paste0("Cleaning up ", length(finas), " fcs files (cutoff ="), cutoff, "):\n")
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] > 200)
+if (length(ind) == 0) {
+next
+} # end if
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok\n")
+} # EOF
+cleanOutNoise()
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+cat(paste0("Cleaning up ", length(finas), " fcs files (cutoff ="), cutoff, "):\n")
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] > 200)
+if (length(ind) == 0) {
+cat("|")
+next
+} # end if
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok\n")
+} # EOF
+cleanOutNoise()
+cleanOutNoise <- function(fn="fcsFiles", cutoff=200) {
+finas <- list.files(fn, full.names = TRUE)
+cat(paste0("Cleaning up ", length(finas), " fcs files (cutoff ="), cutoff, "):\n")
+for (i in seq_along(finas)) {
+sifcs <- flowCore::read.FCS(finas[i])
+ind <- which(sifcs@exprs[, "FITC-A"] < 200)
+if (length(ind) == 0) {
+cat("|")
+next
+} # end if
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[-ind,], parameters=sifcs@parameters, description=sifcs@description)
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok\n")
+} # EOF
+cleanOutNoise()
+gs <- makeAddGatingSet()
+plotgates(gs, ti="Mod", fns="_mod")
+library(bpdissap)
+library(flowdex)
+gs <- makeAddGatingSet()
+plotgates(gs, ti="Orig", fns="_orig")
+# first clean out the noise
+cleanOutNoise()
+gs <- makeAddGatingSet()
+plotgates(gs, ti="Clean", fns="_clean")
+# first clean out the noise
+cleanOutNoise()
+sample(a, 30)
+a <- 1:100
+sample(a, 30)
+a <- 1:10
+a <- 1:10
+sample(a, 6)
+sample(a, 6, replace = T)
+sample(a, 6, replace = T)
+sample(a, 6, replace = T)
+sample(a, 6, replace = T)
+sample(a, 6, replace = T)
+sample(a, 6)
+sample(a, 6)
+sample(a, 6)
+sample(a, 6)
+sample(a, 6)
+sample(a, 6)
+finas <- list.files("fcsFiles", pattern = patt, full.names = TRUE)
+finas <- list.files("fcsFiles", pattern = NULL, full.names = TRUE)
+finas
+sifcs <- flowCore::read.FCS(finas[1])
+sifcs@description$VOL
+#' cut down the number of acquired signals within the file to a specific
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", ")))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", ")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- sifcs@description$VOL
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+} # EOF
+cutDownFcsFiles(patt="GrC", toPerc = 100)
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- sifcs@description$VOL
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+cutDownFcsFiles(patt="GrC", toPerc = 100)
+cutDownFcsFiles(patt="GrB", toPerc = 100)
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+if (toPerc > 100) {
+stop("'toPerc' must be not higher than 100.")
+}
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- sifcs@description$VOL
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+cutDownFcsFiles(patt="GrB", toPerc = 66)
+repairVolumes()
+repairVolumes(123)
+repairVolumes(vol=123)
+repairVolumes(vol=123)
+cutDownFcsFiles(patt="GrB", toPerc = 66)
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+if (toPerc > 100) {
+stop("'toPerc' must be not higher than 100.")
+}
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- sifcs@description$VOL
+print(oldVol); wait()
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+cutDownFcsFiles(patt="GrB", toPerc = 66, confirm = F)
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+if (toPerc > 100) {
+stop("'toPerc' must be not higher than 100.")
+}
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- as.numeric(sifcs@description$VOL)
+print(oldVol); wait()
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+cutDownFcsFiles(patt="GrB", toPerc = 66, confirm = F)
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+if (toPerc > 100) {
+stop("'toPerc' must be not higher than 100.")
+}
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- as.numeric(sifcs@description$VOL)
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+#' percentage. The selection which signals remains is purely random (via
+#' \code{sample}). The value of the acquired volume will be adapted as well.
+#' @details Existing files will be overwritten.
+#' @param fn Folder name.
+#' @param patt Regular expression, which files to include.
+#' @param toPerc Numeric, the percentage the files should be cut down to.
+#' @param confirm If confirmation is required before actually re-writing the
+#' fcs files. Defaults to TRUE.
+#' @return Nothing. Fcs files get rewritten to disc.
+#' @export
+cutDownFcsFiles <- function(fn="fcsFiles", patt=NULL, toPerc=NULL, confirm=TRUE) {
+if (is.null(toPerc)) {
+stop("Please provide a value for 'toPerc'")
+} # end if
+if (toPerc > 100) {
+stop("'toPerc' must be not higher than 100.")
+}
+finas <- list.files(fn, pattern = patt, full.names = TRUE)
+if (toPerc == 100) {
+cat(paste0("Leaving the following .fcs files unchanged:\n", paste(basename(finas), collapse=", \n")))
+return(invisible(NULL))
+} # end if
+#
+for (i in seq_along(finas)) {
+cat(paste0("Cutting the following ", length(finas), " .fcs files down to ", toPerc, " percent of acquired signals:\n", paste(basename(finas), collapse=", \n")))
+if (confirm) {
+cat("\n\nPress enter to continue or escape to abort:")
+scan(file = "", n = 1, quiet = TRUE)
+} # end if confirm
+sifcs <- flowCore::read.FCS(finas[i])
+thisLen <- nrow(sifcs@exprs)
+newLen <- round((toPerc * thisLen) / 100, 0)
+newInd <- sample(1:thisLen, newLen)
+newfcs <- new("flowFrame",  exprs=sifcs@exprs[newInd,], parameters=sifcs@parameters, description=sifcs@description)
+#
+oldVol <- as.numeric(sifcs@description$VOL)
+newVol <- round( (toPerc * oldVol) / 100, 0)
+newfcs@description$VOL <- newVol # write the new volume into the file
+thisName <- basename(finas[i])
+flowCore::write.FCS(newfcs, paste0(fn, "/", thisName))
+cat(".")
+} # end for i
+cat("\nok.\n")
+return(invisible(NULL))
+} # EOF
+library(bpdissap)
+cutFcsFilesToPercent(patt="GrB", toPerc = 66)
+cutFcsFilesToPercent(patt="GrB", toPerc = 66, confirm = FALSE)
+library(bpdissap)
+cutFcsFilesToPercent(patt="GrB", toPerc = 66, confirm = FALSE)

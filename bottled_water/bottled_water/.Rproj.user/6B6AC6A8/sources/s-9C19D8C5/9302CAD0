@@ -1,0 +1,27 @@
+{
+    "id": "9302CAD0",
+    "path": "~/Documents/RPS/flowdex_R/bottled_water_R/bottled_water/cleanUpScript.R",
+    "project_path": "cleanUpScript.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1647768182485.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "31,0",
+        "scrollLine": "0"
+    },
+    "folds": "7|9|14|0|\n",
+    "lastKnownWriteTime": 1647776078,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1647776078704,
+    "read_only": false,
+    "read_only_alternatives": []
+}

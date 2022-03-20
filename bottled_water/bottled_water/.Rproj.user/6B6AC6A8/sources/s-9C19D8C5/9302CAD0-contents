@@ -1,0 +1,31 @@
+
+library(bpdissap)
+library(flowdex)
+# genfs()
+
+
+
+#### DEV ####
+
+finas <- list.files("fcsFiles", pattern = NULL, full.names = TRUE)
+
+sifcs <- flowCore::read.FCS(finas[1])
+
+
+
+#### do it ####
+gs <- makeAddGatingSet()
+
+plotgates(gs, ti="Orig", fns="_orig")
+
+# first clean out the noise
+# cleanOutNoise()
+
+# now cut into thirds
+# 9 samples from every water type:
+#   3 original size:    GrC
+#   3 66%               GrB
+#   3 33%               GrA
+#
+
+cutFcsFilesToPercent(patt="GrB", toPerc = 66, confirm = FALSE)

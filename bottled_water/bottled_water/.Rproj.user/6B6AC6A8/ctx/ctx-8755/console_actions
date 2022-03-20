@@ -1,0 +1,16 @@
+{
+    "type": [
+        0,
+        1,
+        0,
+        1,
+        2
+    ],
+    "data": [
+        "> ",
+        "library(bpdissap)",
+        "> ",
+        "cutFcsFilesToPercent(patt=\"GrB\", toPerc = 66, confirm = FALSE)",
+        "Cutting the following 9 .fcs files down to 66 percent of acquired signals:\nAq_GrB_r1.fcs, \nAq_GrB_r2.fcs, \nAq_GrB_r3.fcs, \nEv_GrB_r1.fcs, \nEv_GrB_r2.fcs, \nEv_GrB_r3.fcs, \nVo_GrB_r1.fcs, \nVo_GrB_r2.fcs, \nVo_GrB_r3.fcs.........\nok.\n\nRestarting R session...\n\n"
+    ]
+}
